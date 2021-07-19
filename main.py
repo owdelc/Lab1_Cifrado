@@ -1,8 +1,8 @@
-from cy import eceasar, deceasar, evigenere
+from cy import eceasar, deceasar, evigenere, devigenere
 
 
 
-evigenere('text.txt', 'clave')
+devigenere('text.txt', 'clave')
 
 with open('text.txt', 'r') as file:
     data = file.read().replace('\n', '')

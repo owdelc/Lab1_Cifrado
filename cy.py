@@ -52,7 +52,7 @@ def eceasar(mensaje, llave):
     
     with open(mensaje, 'w') as file2:
         file2.write(nuevo)
-        file2.close
+        file2.close()
 
     return print('Cifrado realizado exitosamente!')
     
@@ -97,7 +97,7 @@ def deceasar(cifrado, llave):
 
     with open(cifrado, 'w') as file2:
         file2.write(mensaje)
-        file2.close
+        file2.close()
     
     return print('Descifrado realizado exitosamente!')
 
@@ -131,10 +131,42 @@ def evigenere(mensaje, llave):
     
     with open(mensaje, 'w') as file2:
         file2.write(nuevo)
-        file2.close
+        file2.close()
 
     return print('Cifrado realizado exitosamente!')
         
 
+def devigenere(cifrado, llave):
 
+    base ='ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'
+
+    mensaje = ''
+
+    actual = 0
+
+    with open(cifrado, 'r') as file:
+        data = file.read().replace('\n', '')
+
+    n_cifrado = procesamiento(data)
+
+    for i in n_cifrado:
+        s = base.find(i) - base.find(llave[actual % len(llave)])
+        m = int(s) % len(base)
+        mensaje = mensaje + str(base[m])
+
+        actual = actual + 1
+    else:
+
+        i.upper()
+
+        s = base.find(i) - base.find(llave[actual % len(llave)])
+        m = int(s) % len(base)
+        mensaje = mensaje + str(base[m])
+
+        actual = actual + 1
+
+
+    with open(cifrado, 'w') as file2:
+        file2.write(mensaje)
+        file2.close()
 
