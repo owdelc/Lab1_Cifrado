@@ -2,6 +2,7 @@ import numpy as np
 import nltk
 from nltk.probability import FreqDist
 import re
+from collections import Counter
 
 
 def procesamiento(texto):
@@ -242,9 +243,61 @@ def fuerza_ceasar(maximo, mensaje):
         frecuencia(clave)
 
         
+def error(word):
+    abc = {
+        'A': 0.1253,
+        'B': 0.0142, 
+        'C': 0.0468, 
+        'D': 0.0586,
+        'E': 0.1368, 
+        'F': 0.0069,
+        'G': 0.0101, 
+        'H': 0.007, 
+        'I': 0.0625, 
+        'J': 0.0044, 
+        'K': 0.0002, 
+        'L': 0.0497, 
+        'M': 0.0315, 
+        'N': 0.0671, 
+        'Ñ': 0.0031, 
+        'O': 0.0868, 
+        'P': 0.0251, 
+        'Q': 0.0088, 
+        'R': 0.0687, 
+        'S': 0.0798, 
+        'T': 0.0463, 
+        'U': 0.0393, 
+        'V': 0.009, 
+        'W': 0.0001, 
+        'X': 0.0022, 
+        'Y': 0.009, 
+        'Z': 0.0052
+    }
+    
+    frecuencia = {}
+    errort = 0
+
+    total  = len(word)
+
+    counts = Counter(word)
+    for i in set(word):
+        print(i, counts[i])
+        freq = (counts[i]/total) * 100
+        frecuencia.update({i : freq})
+        err = abs(freq - abc.get(i))
+        errort = errort + err
+        print (err)
+    
+    print('Este es el error: ', errort)
+
+    #print (total)
+    print(frecuencia)
+
+
 
     
-""" mensaje = "mensaje"
+""" 
+    mensaje = "mensaje"
     diccionario =  {}
     for char in set(mensaje):
         diccionario[char] = mensaje.count(char)

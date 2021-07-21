@@ -1,4 +1,4 @@
-from cy import eceasar, deceasar, evigenere, devigenere, eafin, deafin, frecuencia 
+from cy import eceasar, deceasar, evigenere, devigenere, eafin, deafin, frecuencia, error 
 
 '''
 devigenere('text.txt', 'clave')
@@ -25,5 +25,5 @@ def main():
 if __name__ == '__main__':
     main()
 '''
-str = 'hola me llamo oscar'
-frecuencia(str)
+str = 'OSCAAAR'
+error(str)
