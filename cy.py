@@ -1,3 +1,9 @@
+import numpy as np
+import nltk
+from nltk.probability import FreqDist
+import re
+
+
 def procesamiento(texto):
     textof = texto.upper()
     textof = textof.replace('Á','A')
@@ -6,7 +12,7 @@ def procesamiento(texto):
     textof = textof.replace('Ó','O')
     textof = textof.replace('Ú','U')
 
-    exclusion = [' ',',', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')']
+    exclusion = [' ',',', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '(', ')', '!', '¡', '?', '¿']
     for i in exclusion:
         textof = textof.replace(i, '')
     return textof
@@ -169,4 +175,83 @@ def devigenere(cifrado, llave):
     with open(cifrado, 'w') as file2:
         file2.write(mensaje)
         file2.close()
+
+
+def aeuclidiano(x, y):
+    a,b, c,d = 0,1, 1,0
+    while x != 0:
+        e, f = y//x, y%x
+        g, h = a-c*e, b-d*e
+        y,x, a,b, c,d = x,f, c,d, g,h
+    euclidiano = y
+    return euclidiano, a, b
+ 
+def moduloinverso(x, g):
+    euclidiano, a, b = aeuclidiano(x, g)
+    if euclidiano != 1:
+        return None  
+    else:
+        return a % g
+ 
+
+def eafin(texto, clave):
+
+    return ''.join([ chr((( clave[0]*(ord(t) - ord('A')) + clave[1] ) % 27)
+                  + ord('A')) for t in texto.upper().replace(' ', '') ])
+ 
+
+def deafin(cifrado, clave):
+
+    return ''.join([ chr((( moduloinverso(clave[0], 27)*(ord(c) - ord('A') - clave[1]))
+                    % 27) + ord('A')) for c in cifrado ])
+ 
+
+def frecuencia(mensaje):
+
+    n_mensaje = procesamiento(mensaje)
+    d = {}
+    teorica = np.array([('A', 0.1253),('B', 0.0142), ('C', 0.0468), ('D', 0.0586),('E', 0.1368), ('F', 0.0069),('G', 0.0101), ('H', 0.007), ('I', 0.0625), ('J', 0.0044), ('K', 0.0002), ('L', 0.0497), ('M', 0.0315), ('N', 0.0671), ('Ñ', 0.0031), ('O', 0.0868), ('P', 0.0251), ('Q', 0.0088), ('R', 0.0687), ('S', 0.0798), ('T', 0.0463), ('U', 0.0393), ('V', 0.009), ('W', 0.0001), ('X', 0.0022), ('Y', 0.009), ('Z', 0.0052)])
+
+    x = len(mensaje)
+
+    ## Arreglar organizacion token 
+    token = re.findall('.', n_mensaje)
+
+    dist = nltk.FreqDist(token)
+
+    d = dist.most_common(100000000000)
+
+    array = [a[1] for a in d]
+    f = np.array(array)
+
+    array2= [a[1] for a in teorica]
+    er = np.array(array)
+
+    ## Arreglar probabilidad y error
+    prob = f/f.sum()
+    error = er-f
+
+    print (token)
+    print('Este es el error: ', error)
+    print('Estas son las frecuencias: ', f)
+    print('Esta es la probabilidad: ', prob)
+
+def fuerza_ceasar(maximo, mensaje):
+    for i in range(maximo):
+        clave = deceasar(mensaje, i)
+        frecuencia(clave)
+
+        
+
+    
+""" mensaje = "mensaje"
+    diccionario =  {}
+    for char in set(a):
+        d[char] = a.count(char)
+
+
+"""
+
+
+
 
