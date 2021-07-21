@@ -246,8 +246,8 @@ def fuerza_ceasar(maximo, mensaje):
     
 """ mensaje = "mensaje"
     diccionario =  {}
-    for char in set(a):
-        d[char] = a.count(char)
+    for char in set(mensaje):
+        diccionario[char] = mensaje.count(char)
 
 
 """
